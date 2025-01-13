@@ -30,4 +30,7 @@ Route::any('/{any}', function (ServerRequestInterface $request) {
     return $response;
 
 })->where('any', '.*');
+<<<<<<< HEAD
 
+=======
+>>>>>>> cefa5a82368ac21d5476b0f38808775ff6f9ea9f
