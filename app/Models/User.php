@@ -47,4 +47,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function competencias()
+    {
+        return $this->belongsToMany(Competencia::class, 'user_competencias')
+            ->withPivot('nivel')
+            ->withTimestamps();
+    }
 }

@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         Model::reguard();
         Schema::enableForeignKeyConstraints();
+        $this->call(CompetenciaTableSeeder::class);
 
     }
 
