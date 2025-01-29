@@ -10,7 +10,7 @@ use App\Http\Controllers\API\IdiomaController;
 use App\Http\Controllers\API\ParticipanteProyectoController;
 use App\Http\Controllers\API\ProyectosCiclosController;
 use App\Http\Controllers\API\ProyectoController;
-use App\Http\Controllers\API\ReconocimientoController;
+use App\Http\Controllers\API\ReconocimientoController; // Ensure this class exists in the specified namespace
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\UsersCiclosController;
 use App\Models\UsersCiclos;
@@ -32,6 +32,7 @@ Route::prefix('v1')->group(function () {
     ]);
     Route::apiResource('curriculos', CurriculoController::class);
     Route::apiResource('users', UserController::class);
+    Route::get('proyectos/count', [ProyectoController::class, 'count']);
     Route::apiResource('proyectos', ProyectoController::class);
     Route::apiResource('reconocimientos', ReconocimientoController::class);
     Route::apiResource('participantes_proyectos', ParticipanteProyectoController::class);
