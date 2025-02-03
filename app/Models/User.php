@@ -34,6 +34,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    public static $filterColumns =[
+        'name', 'nombre', 'apellidos', 'email',
+    ];
 
     /**
      * Get the attributes that should be cast.

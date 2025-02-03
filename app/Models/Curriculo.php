@@ -16,4 +16,13 @@ class Curriculo extends Model
         'video_curriculum',
         'texto_curriculum'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public static $filterColumns = [
+        'id', 'user_id', 'video_curriculum', 'texto_curriculum'
+    ];
 }
