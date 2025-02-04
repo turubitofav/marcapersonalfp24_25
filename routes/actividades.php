@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ActividadController;
 
-Route::group(['prefix' => 'actividades'], function(){
+Route::group(['prefix' => 'actividades'], function () {
     Route::get('/', [ActividadController::class, 'getIndex']);
 
     Route::get('/show/{id}', [ActividadController::class, 'getShow'])->where('id', '[0-9]+');

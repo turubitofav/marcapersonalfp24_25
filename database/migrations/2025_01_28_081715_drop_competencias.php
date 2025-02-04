@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ciclos', function (Blueprint $table) {
-            $table->id();
-            $table->string('familia_id', 4);
-            $table->string('codCiclo', 6);
-            $table->string('nombre');
-            $table->string('grado', 30);
-            $table->timestamps();
+        Schema::table('competencias', function (Blueprint $table) {
+            //
         });
     }
 
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ciclos');
+        Schema::table('competencias', function (Blueprint $table) {
+            //
+        });
     }
 };

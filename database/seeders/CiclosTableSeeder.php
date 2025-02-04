@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Seeders\FamiliasProfesionalesSeeder;
+
 
 class CiclosTableSeeder extends Seeder
 {
@@ -14,13 +16,13 @@ class CiclosTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('ciclos')->truncate();
-        // $familias = FamiliasProfesionalesSeeder::$familias_profesionales;
-        // $codigosFamilias = array_column($familias, 'codigo');
+        $familias = FamiliasProfesionalesSeeder::$familias_profesionales;
+        $codigosFamilias = array_column($familias, 'codigo');
         foreach (self::$ciclos as $ciclo) {
             DB::table('ciclos')->insert([
                 'codCiclo' => $ciclo['codCiclo'],
                 'codFamilia' => $ciclo['codFamilia'],
-                // 'familia_id' => array_search($ciclo['codFamilia'], $codigosFamilias) + 1,
+                'familia_id' => array_search($ciclo['codFamilia'], $codigosFamilias) + 1,
                 'grado' => $ciclo['grado'],
                 'nombre' => $ciclo['nombre'],
             ]);
