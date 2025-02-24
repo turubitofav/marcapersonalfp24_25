@@ -14,7 +14,19 @@ class UsersIdiomas extends Model
     protected $fillable = [
         'user_id',
         'idioma_id',
-        'nievl',
+        'nivel',
         'certificado'
     ];
+
+    public $timestamps = false;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function idioma()
+    {
+        return $this->belongsTo(Idiomas::class);
+    }
 }

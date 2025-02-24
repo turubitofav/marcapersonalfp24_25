@@ -24,4 +24,9 @@ class Idiomas extends Model
 
     public static $filterColumns = ['alpha2', 'alpha3t', 'alpha3b', 'english_name', 'native_name'];
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_idiomas', 'idioma_id', 'user_id')
+            ->withPivot('nivel', 'certificado');
+    }
 }

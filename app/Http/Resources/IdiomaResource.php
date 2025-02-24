@@ -14,6 +14,15 @@ class IdiomaResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        $infoUsuarios = $this->users->map(function ($user) {
+            return [
+                'id' => $user->id
+            ];
+        });
+
+        return array_merge(
+            parent::toArray($request),
+            ['users' => $infoUsuarios]
+        );
     }
 }

@@ -48,7 +48,11 @@ class CurriculoController extends Controller
      */
     public function update(Request $request, Curriculo $curriculo)
     {
+<<<<<<< HEAD
         abort_if (! Gate::allows('update-curriculo', $curriculo), 403);
+=======
+        abort_if ($request->user()->cannot('update', $curriculo), 403);
+>>>>>>> 00b4e0dd525e9738337751202847061c4c77d145
 
         $curriculoData = json_decode($request->getContent(), true);
         $curriculo->update($curriculoData);

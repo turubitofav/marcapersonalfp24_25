@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Idiomas;
+use App\Models\User;
+use App\Models\UsersIdiomas;
 use Illuminate\Database\Seeder;
 
 class UsersIdiomasSeeder extends Seeder
@@ -13,35 +14,35 @@ class UsersIdiomasSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('user_idiomas')->truncate();
+        UsersIdiomas::truncate();
 
+        $users = User::all();
+        $idiomas = Idiomas::all();
+        $niveles = ["Básico", "Intermedio", "Avanzado"];
 
-        DB::table('user_idiomas')->insert([
-            [
-                'user_id' => 1,
-                'idioma_id' => 1,
-                'nivel' => 'Básico',
-                'certificado' => 0,
-            ],
-            [
-                
-                'user_id' => 1,
-                'idioma_id' => 2,
-                'nivel' => 'Intermedio',
-                'certificado' => 1,
-            ],
-            [
-                'user_id' => 2,
-                'idioma_id' => 1,
-                'nivel' => 'Intermedio',
-                'certificado' => 0,
-            ],
-            [
-                'user_id' => 2,
-                'idioma_id' => 2,
-                'nivel' => 'Avanzado',
-                'certificado' => 1,
-            ],
-        ]);
+        foreach ($users as $user) {
+
+            $numIdiomas = rand(1, $idiomas->count());
+
+            $idiomasAsignados = [];
+
+            for ($i = 0; $i < $numIdiomas; $i++) {
+
+                do {
+                    $idiomaIdSeleccionado = $idiomas[rand(0, $idiomas->count() - 1)]->id;
+                } while (in_array($idiomaIdSeleccionado, $idiomasAsignados));
+
+                $idioma = new UsersIdiomas();
+                $this->command->info('Procesando usuario ID: ' . $user->id);
+                $idioma->user_id = $user->id;
+                $idioma->idioma_id = $idiomaIdSeleccionado;
+                $idioma->nivel = $niveles[rand(0, 2)];
+                $idioma->certificado = rand(0, 1);
+                $idioma->save();
+
+                $idiomasAsignados[] = $idiomaIdSeleccionado;
+            }
+
+        }
     }
 }

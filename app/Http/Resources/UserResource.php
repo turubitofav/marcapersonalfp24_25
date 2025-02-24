@@ -14,6 +14,16 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $idiomas = $this->idiomas->map(function ($idioma) {
+            return [
+                'alpha2' => $idioma->alpha2,
+                'english_name' => $idioma->english_name,
+                'native_name' => $idioma->native_name,
+                'nivel' => $idioma->pivot->nivel,
+                'certificado' => $idioma->pivot->certificado
+            ];
+        });
+
         return array_merge(
             parent::toArray($request),
             ['actividades_estudiante' => $this->actividadesComoEstudiante],
@@ -21,7 +31,8 @@ class UserResource extends JsonResource
             ['competencias' => $this->competencias],
             ['curriculo' => $this->curriculo],
             ['ciclos' => $this->ciclos],
-            ['proyectos' => $this->proyectos]
+            ['proyectos' => $this->proyectos],
+            ['idiomas' => $idiomas]
         );
     }
 }
