@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CurriculoResource;
 use App\Models\Curriculo;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 
 class CurriculoController extends Controller
@@ -47,6 +48,8 @@ class CurriculoController extends Controller
      */
     public function update(Request $request, Curriculo $curriculo)
     {
+        abort_if (! Gate::allows('update-curriculo', $curriculo), 403);
+
         $curriculoData = json_decode($request->getContent(), true);
         $curriculo->update($curriculoData);
 
