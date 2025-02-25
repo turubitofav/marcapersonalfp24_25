@@ -7,10 +7,25 @@ use App\Http\Resources\CurriculoResource;
 use App\Models\Curriculo;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class CurriculoController extends Controller
+class CurriculoController extends Controller implements HasMiddleware
 {
     public $modelclass = Curriculo::class;
+
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('auth:sanctum', except: ['index', 'show']),
+        ];
+    }
+
+    // ...
+
 
     /**
      * Display a listing of the resource.
@@ -30,6 +45,9 @@ class CurriculoController extends Controller
     {
 
         $curriculo = json_decode($request->getContent(), true);
+        if (!$request->user()->esAdmin()){
+            $curriculo['user_id'] = $request->user()->id;
+        }
         $curriculo = Curriculo::create($curriculo);
 
         return new CurriculoResource($curriculo);
@@ -48,11 +66,7 @@ class CurriculoController extends Controller
      */
     public function update(Request $request, Curriculo $curriculo)
     {
-<<<<<<< HEAD
-        abort_if (! Gate::allows('update-curriculo', $curriculo), 403);
-=======
         abort_if ($request->user()->cannot('update', $curriculo), 403);
->>>>>>> 00b4e0dd525e9738337751202847061c4c77d145
 
         $curriculoData = json_decode($request->getContent(), true);
         $curriculo->update($curriculoData);
